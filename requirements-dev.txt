@@ -1,0 +1,10 @@
+# Zusätzliche Pakete, um das Notebook auszuführen (nicht für das App-Deployment nötig).
+# Installiert die App-Deps mit und ergänzt Notebook-Werkzeuge.
+-r requirements.txt
+imbalanced-learn>=0.12
+optuna>=3.5
+matplotlib>=3.8
+seaborn>=0.13
+jupyter
+nbformat
+nbconvert

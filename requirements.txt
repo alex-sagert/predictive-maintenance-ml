@@ -1,0 +1,9 @@
+# App-/Deployment-Abhängigkeiten (Streamlit Community Cloud liest diese Datei).
+# Bewusst schlank gehalten – nur was app.py zur Laufzeit braucht.
+# xgboost ist auf die Trainingsversion gepinnt, damit model.joblib sicher lädt.
+streamlit>=1.40
+pandas>=2.2
+numpy>=1.26
+scikit-learn>=1.4
+xgboost==3.2.0
+joblib>=1.3
