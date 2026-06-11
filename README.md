@@ -14,6 +14,21 @@ Die Projektpräsentation liegt im Repo und ist auch online verfügbar:
 - 📥 **[PowerPoint (PPTX)](praesentation/Predictive-Maintenance-Praesentation.pptx)** — herunterladen
 - 🌐 **[Online-Version (Gamma)](https://gamma.app/docs/8tkohzmsde1ldp2)**
 
+## 🧭 Clusteranalyse & 3D-Visualisierung
+
+Wo im Merkmalsraum sitzen die Ausfälle? Das Companion-Notebook
+[`15-predictive-maintenance-clusteranalyse-3d-AS.ipynb`](15-predictive-maintenance-clusteranalyse-3d-AS.ipynb)
+projiziert die Sensordaten per PCA in den 3D-Raum und sucht mit Clustering nach Risikozonen.
+
+| Ausfälle im 3D-Raum | Fehlertypen im 3D-Raum |
+|---|---|
+| ![PCA 3D Ausfälle](visualisierung/01_pca_3d_ausfaelle.png) | ![PCA 3D Fehlertypen](visualisierung/02_pca_3d_fehlertypen.png) |
+
+Die Ausfälle (rot) liegen **strukturiert am Rand** des Raums (kein Rauschen, sondern Physik),
+und verschiedene Fehlertypen besetzen **verschiedene Zonen**. Ein **drehbarer, interaktiver
+3D-Plot** liegt unter [`visualisierung/03_pca_3d_interaktiv.html`](visualisierung/03_pca_3d_interaktiv.html)
+(im Browser öffnen, offline lauffähig).
+
 ## 🖥️ Lokal starten
 
 ```bash
@@ -75,7 +90,15 @@ predictive-maintenance-ml/
 │   └── ai4i2020.csv                              (Datensatz, UCI AI4I 2020)
 ├── praesentation/
 │   └── Predictive-Maintenance-Praesentation.pptx (Projektpräsentation)
+├── visualisierung/
+│   ├── 01_pca_3d_ausfaelle.png                   (3D-Raum: Ausfälle hervorgehoben)
+│   ├── 02_pca_3d_fehlertypen.png                 (3D-Raum: nach Fehlertyp)
+│   ├── 03_pca_3d_interaktiv.html                 (interaktiver, drehbarer 3D-Plot)
+│   ├── 04_dendrogramm.png                        (hierarchisches Clustering)
+│   ├── 05_kmeans_3d_risikozonen.png              (K-Means-Risikozonen im 3D-Raum)
+│   └── 06_methodenvergleich.png                  (K-Means vs. Ward vs. DBSCAN)
 ├── 14-predictive-maintenance-projektarbeit-AS.ipynb   (Haupt-Notebook, vollständige Analyse)
+├── 15-predictive-maintenance-clusteranalyse-3d-AS.ipynb (Clusteranalyse & 3D-Visualisierung)
 ├── app.py                                        (Streamlit-Demo: Tacho + Kostenrechner)
 ├── model.joblib                                  (exportiertes, getuntes XGBoost-Modell)
 ├── requirements.txt                              (App-/Deployment-Abhängigkeiten)
