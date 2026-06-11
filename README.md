@@ -7,6 +7,8 @@ Features:
 - 🎚️ Sensor-Schieberegler für alle Maschinenparameter (Temperatur, Drehzahl, Drehmoment, Verschleiß)
 - 🔧 Ausfallrisiko in Echtzeit als Tacho-Anzeige (grün / gelb / rot)
 - 💶 Integrierter Kostenrechner: geplante Wartung vs. ungeplanter Ausfall → erwartete Ersparnis
+- 📅 **Forecast & Wartungsfahrplan:** Risikokurve über Kalenderdaten (Verschleiß als Zeitachse),
+  konkrete Wartungstermine („Wartung bis TT.MM. einplanen") und Flotten-ROI mit Break-Even-Punkt
 
 ## 📊 Präsentation
 
@@ -88,6 +90,8 @@ Konkret untersucht werden:
 predictive-maintenance-ml/
 ├── data/
 │   └── ai4i2020.csv                              (Datensatz, UCI AI4I 2020)
+├── dokumentation/
+│   └── Dokumentation_Nachvollziehbare_Schritte_… .docx (Abgabe-Dokumentation)
 ├── praesentation/
 │   └── Predictive-Maintenance-Praesentation.pptx (Projektpräsentation)
 ├── visualisierung/
@@ -99,7 +103,7 @@ predictive-maintenance-ml/
 │   └── 06_methodenvergleich.png                  (K-Means vs. Ward vs. DBSCAN)
 ├── 14-predictive-maintenance-projektarbeit-AS.ipynb   (Haupt-Notebook, vollständige Analyse)
 ├── 15-predictive-maintenance-clusteranalyse-3d-AS.ipynb (Clusteranalyse & 3D-Visualisierung)
-├── app.py                                        (Streamlit-Demo: Tacho + Kostenrechner)
+├── app.py                                        (Streamlit-Demo: Tacho, Kostenrechner, Forecast)
 ├── model.joblib                                  (exportiertes, getuntes XGBoost-Modell)
 ├── requirements.txt                              (App-/Deployment-Abhängigkeiten)
 ├── requirements-dev.txt                          (+ Notebook-Werkzeuge)
