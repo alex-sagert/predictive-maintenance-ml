@@ -8,6 +8,12 @@ Features:
 - 🔧 Ausfallrisiko in Echtzeit als Tacho-Anzeige (grün / gelb / rot)
 - 💶 Integrierter Kostenrechner: geplante Wartung vs. ungeplanter Ausfall → erwartete Ersparnis
 
+## 📊 Präsentation
+
+Die Projektpräsentation liegt im Repo und ist auch online verfügbar:
+- 📥 **[PowerPoint (PPTX)](praesentation/Predictive-Maintenance-Praesentation.pptx)** — herunterladen
+- 🌐 **[Online-Version (Gamma)](https://gamma.app/docs/8tkohzmsde1ldp2)**
+
 ## 🖥️ Lokal starten
 
 ```bash
@@ -67,6 +73,8 @@ Konkret untersucht werden:
 predictive-maintenance-ml/
 ├── data/
 │   └── ai4i2020.csv                              (Datensatz, UCI AI4I 2020)
+├── praesentation/
+│   └── Predictive-Maintenance-Praesentation.pptx (Projektpräsentation)
 ├── 14-predictive-maintenance-projektarbeit-AS.ipynb   (Haupt-Notebook, vollständige Analyse)
 ├── app.py                                        (Streamlit-Demo: Tacho + Kostenrechner)
 ├── model.joblib                                  (exportiertes, getuntes XGBoost-Modell)
