@@ -31,6 +31,18 @@ und verschiedene Fehlertypen besetzen **verschiedene Zonen**. Ein **drehbarer, i
 3D-Plot** liegt unter [`visualisierung/03_pca_3d_interaktiv.html`](visualisierung/03_pca_3d_interaktiv.html)
 (im Browser öffnen, offline lauffähig).
 
+## 🤖 AutoML-Benchmark (PyCaret)
+
+[`18-predictive-maintenance-automl-pycaret-AS.ipynb`](18-predictive-maintenance-automl-pycaret-AS.ipynb)
+vergleicht das handgebaute, mit Optuna getunte XGBoost gegen eine automatische ML-Pipeline
+(PyCaret, ~15 Modelle per Cross-Validation). PyCaret lief in einer **isolierten** Umgebung
+(verlangt ältere numpy/pandas/sklearn), damit das Projekt-Environment unberührt bleibt.
+
+**Ergebnis:** Auch AutoML landet bei **Boosting** (Sieger LightGBM, AUC 0,97) — verblüffend nah am
+hand­getunten XGBoost (ROC-AUC 0,98). Die schönste Lektion liefert der **Dummy-Classifier**:
+96,6 % Accuracy bei AUC 0,5 und Recall 0 % — der Beweis, warum dieses Projekt auf **Recall/PR-AUC**
+statt Accuracy optimiert.
+
 ## 🧩 Ensemble-Vergleich & Erklärbarkeit (SHAP)
 
 Das Companion-Notebook
@@ -134,11 +146,16 @@ predictive-maintenance-ml/
 │   ├── 10_ensemble_vergleich.png                 (Baum/Bagging/Boosting/Stacking)
 │   ├── 11_permutation_importance.png             (globale Feature-Wichtigkeit)
 │   ├── 12_shap_beeswarm.png                      (SHAP global)
-│   └── 13_shap_waterfall.png                     (SHAP für eine konkrete Maschine)
+│   ├── 13_shap_waterfall.png                     (SHAP für eine konkrete Maschine)
+│   └── 14_pycaret_leaderboard.png                (AutoML-Leaderboard)
+├── pycaret_results/
+│   ├── leaderboard.csv                           (PyCaret-Benchmark-Ergebnisse)
+│   └── run_benchmark.py                          (Reproduktion, isolierte venv)
 ├── 14-predictive-maintenance-projektarbeit-AS.ipynb   (Haupt-Notebook, vollständige Analyse)
 ├── 15-predictive-maintenance-clusteranalyse-3d-AS.ipynb (Clusteranalyse & 3D-Visualisierung)
 ├── 16-predictive-maintenance-anomalie-erkennung-AS.ipynb (Ausreißer- & Anomalie-Erkennung)
 ├── 17-predictive-maintenance-ensembles-erklaerbarkeit-AS.ipynb (Ensembles & SHAP-Erklärbarkeit)
+├── 18-predictive-maintenance-automl-pycaret-AS.ipynb  (AutoML-Benchmark vs. PyCaret)
 ├── app.py                                        (Streamlit-Demo: Tacho, Kostenrechner, Forecast)
 ├── model.joblib                                  (exportiertes, getuntes XGBoost-Modell)
 ├── requirements.txt                              (App-/Deployment-Abhängigkeiten)
