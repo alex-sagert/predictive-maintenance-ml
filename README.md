@@ -14,7 +14,7 @@ Features:
 
 Die Projektpräsentation liegt im Repo und ist auch online verfügbar:
 - 📥 **[PowerPoint (PPTX)](praesentation/Predictive-Maintenance-Praesentation.pptx)** — herunterladen
-- 🌐 **[Online-Version (Gamma)](https://gamma.app/docs/8tkohzmsde1ldp2)**
+- 🌐 **[Online-Version (Gamma)](https://gamma.app/docs/0f3dw4mt8klx5zm)**
 
 ## 🧭 Clusteranalyse & 3D-Visualisierung
 
