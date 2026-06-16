@@ -31,6 +31,24 @@ und verschiedene Fehlertypen besetzen **verschiedene Zonen**. Ein **drehbarer, i
 3D-Plot** liegt unter [`visualisierung/03_pca_3d_interaktiv.html`](visualisierung/03_pca_3d_interaktiv.html)
 (im Browser öffnen, offline lauffähig).
 
+## 🧩 Ensemble-Vergleich & Erklärbarkeit (SHAP)
+
+Das Companion-Notebook
+[`17-predictive-maintenance-ensembles-erklaerbarkeit-AS.ipynb`](17-predictive-maintenance-ensembles-erklaerbarkeit-AS.ipynb)
+zeigt die ganze Ensemble-Progression — **ein Baum → Bagging (Random Forest) → Boosting (XGBoost)
+→ Stacking** — und erklärt das Modell mit **Permutation Importance** und **SHAP**.
+
+| Modell | PR-AUC | F1 |
+|---|---|---|
+| 1 Baum (Decision Tree) | 0,77 | 0,53 |
+| Bagging (Random Forest) | 0,87 | 0,83 |
+| **Boosting (XGBoost, Optuna)** | **0,89** | 0,81 |
+| Stacking (LR+RF+XGB) | 0,88 | **0,88** |
+
+Mit **SHAP** lässt sich jede einzelne Vorhersage aufschlüsseln — keine Black Box:
+
+![SHAP Waterfall](visualisierung/13_shap_waterfall.png)
+
 ## 🔎 Ausreißer- & Anomalie-Erkennung (unüberwacht)
 
 Das Companion-Notebook
@@ -112,10 +130,15 @@ predictive-maintenance-ml/
 │   ├── 06_methodenvergleich.png                  (K-Means vs. Ward vs. DBSCAN)
 │   ├── 07_boxplots_sensoren.png                  (univariate Ausreißer je Sensor)
 │   ├── 08_anomalie_scoreverteilung.png           (Anomalie-Score: OK vs. Ausfall)
-│   └── 09_anomalien_3d.png                        (Anomalien im 3D-Raum)
+│   ├── 09_anomalien_3d.png                        (Anomalien im 3D-Raum)
+│   ├── 10_ensemble_vergleich.png                 (Baum/Bagging/Boosting/Stacking)
+│   ├── 11_permutation_importance.png             (globale Feature-Wichtigkeit)
+│   ├── 12_shap_beeswarm.png                      (SHAP global)
+│   └── 13_shap_waterfall.png                     (SHAP für eine konkrete Maschine)
 ├── 14-predictive-maintenance-projektarbeit-AS.ipynb   (Haupt-Notebook, vollständige Analyse)
 ├── 15-predictive-maintenance-clusteranalyse-3d-AS.ipynb (Clusteranalyse & 3D-Visualisierung)
 ├── 16-predictive-maintenance-anomalie-erkennung-AS.ipynb (Ausreißer- & Anomalie-Erkennung)
+├── 17-predictive-maintenance-ensembles-erklaerbarkeit-AS.ipynb (Ensembles & SHAP-Erklärbarkeit)
 ├── app.py                                        (Streamlit-Demo: Tacho, Kostenrechner, Forecast)
 ├── model.joblib                                  (exportiertes, getuntes XGBoost-Modell)
 ├── requirements.txt                              (App-/Deployment-Abhängigkeiten)
