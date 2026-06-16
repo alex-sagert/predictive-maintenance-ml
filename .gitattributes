@@ -1,0 +1,4 @@
+# Sprachstatistik (GitHub Linguist) bereinigen:
+# Die große interaktive Plotly-HTML soll die Sprachanzeige nicht dominieren.
+*.html linguist-generated=true
+visualisierung/** linguist-documentation
