@@ -228,6 +228,26 @@ with tab_forecast:
     import plotly.graph_objects as go
 
     fig = go.Figure()
+
+    # Farbige Risikozonen-Bänder hinter der Kurve (grün < wirtschaftlich < gelb < Modell-Alarm < rot)
+    ymax = max(float(probs.max() * 100), MODEL_THRESHOLD * 100 * 2.0)
+    fig.add_hrect(y0=0, y1=econ_thr * 100, fillcolor="#16a34a", opacity=0.07,
+                  line_width=0, layer="below")
+    fig.add_hrect(y0=econ_thr * 100, y1=MODEL_THRESHOLD * 100, fillcolor="#f59e0b",
+                  opacity=0.09, line_width=0, layer="below")
+    fig.add_hrect(y0=MODEL_THRESHOLD * 100, y1=ymax * 1.05, fillcolor="#dc2626",
+                  opacity=0.07, line_width=0, layer="below")
+
+    # Schattiertes Wartungsfenster: zwischen wirtschaftlicher und Modell-Alarm-Schwelle
+    if i_econ is not None and i_model is not None and i_model > i_econ:
+        fig.add_vrect(x0=dates[i_econ].to_pydatetime(), x1=dates[i_model].to_pydatetime(),
+                      fillcolor="#16a34a", opacity=0.13, line_width=0, layer="below",
+                      annotation_text="Wartungsfenster", annotation_position="top left")
+
+    # Heute-Linie zur Orientierung
+    fig.add_vline(x=dates[0].to_pydatetime(), line_dash="dot", line_color="#6b7280",
+                  annotation_text="heute", annotation_position="bottom left")
+
     fig.add_trace(go.Scatter(x=dates, y=probs * 100, mode="lines",
                              name="Ausfallrisiko", line=dict(color="#e03131", width=3)))
     fig.add_hline(y=econ_thr * 100, line_dash="dash", line_color="#f59e0b",
@@ -244,7 +264,7 @@ with tab_forecast:
                                      text=[lbl], textposition="top center", showlegend=False))
     fig.update_layout(height=420, margin=dict(t=30, b=10),
                       yaxis_title="Ausfallrisiko (%)", xaxis_title="Datum",
-                      legend=dict(orientation="h"))
+                      yaxis_range=[0, ymax * 1.05], legend=dict(orientation="h"))
     st.plotly_chart(fig, use_container_width=True)
 
     # ---------------- Wartungsfahrplan ----------------
