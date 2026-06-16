@@ -158,6 +158,7 @@ predictive-maintenance-ml/
 ├── 16-predictive-maintenance-anomalie-erkennung-AS.ipynb (Ausreißer- & Anomalie-Erkennung)
 ├── 17-predictive-maintenance-ensembles-erklaerbarkeit-AS.ipynb (Ensembles & SHAP-Erklärbarkeit)
 ├── 18-predictive-maintenance-automl-pycaret-AS.ipynb  (AutoML-Benchmark vs. PyCaret)
+├── PROJEKT-GUIDE.md                              (erklärt alle Notebooks + den Risiko-Forecast)
 ├── app.py                                        (Streamlit-Demo: Tacho, Kostenrechner, Forecast)
 ├── model.joblib                                  (exportiertes, getuntes XGBoost-Modell)
 ├── requirements.txt                              (App-/Deployment-Abhängigkeiten)
