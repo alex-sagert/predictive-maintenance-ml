@@ -31,6 +31,15 @@ und verschiedene Fehlertypen besetzen **verschiedene Zonen**. Ein **drehbarer, i
 3D-Plot** liegt unter [`visualisierung/03_pca_3d_interaktiv.html`](visualisierung/03_pca_3d_interaktiv.html)
 (im Browser öffnen, offline lauffähig).
 
+## 🔎 Ausreißer- & Anomalie-Erkennung (unüberwacht)
+
+Das Companion-Notebook
+[`16-predictive-maintenance-anomalie-erkennung-AS.ipynb`](16-predictive-maintenance-anomalie-erkennung-AS.ipynb)
+findet auffällige Maschinen **ganz ohne Labels** (Isolation Forest, LOF, Elliptic Envelope) —
+der „Cold-Start"-Fall, wenn noch keine Ausfall-Historie existiert. Der Nachweis: Die markierten
+Anomalien treffen echte Ausfälle **~10× besser als Zufall** (Isolation Forest: Precision 0,33 bei
+Basisrate 0,034, ROC-AUC 0,86) — und das, obwohl die Verfahren die Ausfall-Labels nie gesehen haben.
+
 ## 🖥️ Lokal starten
 
 ```bash
@@ -100,9 +109,13 @@ predictive-maintenance-ml/
 │   ├── 03_pca_3d_interaktiv.html                 (interaktiver, drehbarer 3D-Plot)
 │   ├── 04_dendrogramm.png                        (hierarchisches Clustering)
 │   ├── 05_kmeans_3d_risikozonen.png              (K-Means-Risikozonen im 3D-Raum)
-│   └── 06_methodenvergleich.png                  (K-Means vs. Ward vs. DBSCAN)
+│   ├── 06_methodenvergleich.png                  (K-Means vs. Ward vs. DBSCAN)
+│   ├── 07_boxplots_sensoren.png                  (univariate Ausreißer je Sensor)
+│   ├── 08_anomalie_scoreverteilung.png           (Anomalie-Score: OK vs. Ausfall)
+│   └── 09_anomalien_3d.png                        (Anomalien im 3D-Raum)
 ├── 14-predictive-maintenance-projektarbeit-AS.ipynb   (Haupt-Notebook, vollständige Analyse)
 ├── 15-predictive-maintenance-clusteranalyse-3d-AS.ipynb (Clusteranalyse & 3D-Visualisierung)
+├── 16-predictive-maintenance-anomalie-erkennung-AS.ipynb (Ausreißer- & Anomalie-Erkennung)
 ├── app.py                                        (Streamlit-Demo: Tacho, Kostenrechner, Forecast)
 ├── model.joblib                                  (exportiertes, getuntes XGBoost-Modell)
 ├── requirements.txt                              (App-/Deployment-Abhängigkeiten)
