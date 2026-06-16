@@ -9,6 +9,8 @@ Features:
 - 💶 Integrierter Kostenrechner: geplante Wartung vs. ungeplanter Ausfall → erwartete Ersparnis
 - 📅 **Forecast & Wartungsfahrplan:** Risikokurve über Kalenderdaten (Verschleiß als Zeitachse),
   konkrete Wartungstermine („Wartung bis TT.MM. einplanen") und Flotten-ROI mit Break-Even-Punkt
+- 📊 **Analysen-Tab:** Clustering & 3D-Raum, Anomalie-Erkennung, Ensemble-Vergleich & SHAP,
+  AutoML-Benchmark – die vertiefenden Ergebnisse direkt in der App
 
 ## 📊 Präsentation
 

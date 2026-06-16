@@ -4,6 +4,7 @@ Streamlit-Demo · Predictive Maintenance
 ----------------------------------------
 Tab 1: Sensor-Slider -> Ausfallrisiko (Tacho) + Kostenrechner.
 Tab 2: Forecast entlang der Betriebszeit -> Wartungsfahrplan mit Terminen + Flotten-ROI.
+Tab 3: Analysen -> Clustering/3D, Anomalie-Erkennung, Ensembles & SHAP, AutoML-Benchmark.
 
 Start:  streamlit run app.py     (aus dem Projektordner)
 
@@ -20,6 +21,7 @@ import streamlit as st
 APP_DIR = Path(__file__).resolve().parent
 DATA_PATH = APP_DIR / "data" / "ai4i2020.csv"
 MODEL_PATH = APP_DIR / "model.joblib"
+VIZ_DIR = APP_DIR / "visualisierung"
 RANDOM_STATE = 42
 
 MODEL_THRESHOLD = 0.092   # Recall-orientierte Alarmschwelle aus dem Notebook (Abschnitt 7)
@@ -87,6 +89,15 @@ def predict_proba_frame(model, frame: pd.DataFrame) -> np.ndarray:
     return model.predict_proba(build_features(frame))[:, 1]
 
 
+def show_img(name: str, caption: str = ""):
+    """Zeigt eine gerenderte Analyse-Grafik aus visualisierung/ (robust, falls Datei fehlt)."""
+    p = VIZ_DIR / name
+    if p.exists():
+        st.image(str(p), caption=caption, use_container_width=True)
+    else:
+        st.info(f"Grafik nicht gefunden: {name}")
+
+
 # ----------------------------------------------------------------- Tacho (SVG)
 def gauge_svg(p: float) -> str:
     """Halbkreis-Tacho 0–100 % als reines SVG (keine Extra-Abhängigkeit)."""
@@ -135,7 +146,8 @@ cost_failure = st.sidebar.number_input("Ungeplanter Ausfall (€)", value=8000, 
 # ---- Aktuelle Vorhersage ----
 proba = float(predict_proba_frame(model, pd.DataFrame([inputs]))[0])
 
-tab_now, tab_forecast = st.tabs(["🔧 Risiko jetzt", "📅 Forecast & Wartungsfahrplan"])
+tab_now, tab_forecast, tab_analysen = st.tabs(
+    ["🔧 Risiko jetzt", "📅 Forecast & Wartungsfahrplan", "📊 Analysen"])
 
 # ================================================================= Tab 1: Risiko jetzt
 with tab_now:
@@ -335,3 +347,63 @@ with tab_forecast:
         f"der Testmenge) · Ersparnis je abgefangenem Ausfall = {cost_failure:,.0f} € − "
         f"{cost_planned:,.0f} € = {saving_per_avoided:,.0f} €. Vereinfachte Modellrechnung – alle "
         f"Parameter anpassbar.")
+
+# ================================================================= Tab 3: Analysen
+with tab_analysen:
+    st.markdown("### 📊 Vertiefende Modell-Analysen")
+    st.caption("Ergebnisse aus den Begleit-Notebooks (15–18): unüberwachtes Lernen, "
+               "Anomalie-Erkennung, Ensemble-Vergleich, Erklärbarkeit und AutoML-Benchmark.")
+
+    sub_clust, sub_anom, sub_ens, sub_auto = st.tabs(
+        ["🧭 Clustering & 3D", "🔎 Anomalie", "🧩 Ensembles & SHAP", "🤖 AutoML"])
+
+    # ---------- Clustering & 3D ----------
+    with sub_clust:
+        st.markdown("**Wo im Merkmalsraum sitzen die Ausfälle?** Per PCA in den 3D-Raum projiziert "
+                    "— Ausfälle liegen strukturiert am Rand, Fehlertypen in eigenen Zonen.")
+        c1, c2 = st.columns(2)
+        with c1:
+            show_img("01_pca_3d_ausfaelle.png", "Ausfälle (rot) im 3D-Raum")
+        with c2:
+            show_img("02_pca_3d_fehlertypen.png", "Fehlertypen in unterschiedlichen Zonen")
+        c3, c4 = st.columns(2)
+        with c3:
+            show_img("05_kmeans_3d_risikozonen.png", "K-Means: Risikozone hervorgehoben")
+        with c4:
+            show_img("06_methodenvergleich.png", "K-Means vs. Ward vs. DBSCAN")
+        st.info("Befund: Unüberwachtes Clustering findet dieselben Risikotreiber (hohe mechanische "
+                "Last) wie das überwachte Modell.", icon="💡")
+
+    # ---------- Anomalie ----------
+    with sub_anom:
+        st.markdown("**Auffällige Maschinen ohne Labels finden** (Isolation Forest, LOF, Elliptic "
+                    "Envelope) — der Cold-Start-Fall, wenn noch keine Ausfall-Historie existiert.")
+        c1, c2 = st.columns(2)
+        with c1:
+            show_img("08_anomalie_scoreverteilung.png", "Anomalie-Score: Ausfälle liegen höher")
+        with c2:
+            show_img("09_anomalien_3d.png", "Anomalien im 3D-Raum (grün = Treffer)")
+        st.info("Ohne je ein Label gesehen zu haben, trifft Isolation Forest echte Ausfälle ~10× "
+                "besser als Zufall (Precision 0,33 bei Basisrate 0,034, ROC-AUC 0,86).", icon="💡")
+
+    # ---------- Ensembles & SHAP ----------
+    with sub_ens:
+        st.markdown("**Die ganze Ensemble-Progression** — ein Baum → Bagging → Boosting → Stacking "
+                    "— und **SHAP** erklärt jede einzelne Vorhersage.")
+        c1, c2 = st.columns(2)
+        with c1:
+            show_img("10_ensemble_vergleich.png", "Ensemble-Vergleich (PR-AUC & Recall)")
+        with c2:
+            show_img("13_shap_waterfall.png", "SHAP: warum diese Maschine als riskant gilt")
+        st.info("Keine Black Box: Für eine Risiko-Maschine treiben Verschleiß × Drehmoment, "
+                "Drehmoment, Drehzahl und Leistung das Risiko — physikalisch nachvollziehbar.",
+                icon="💡")
+
+    # ---------- AutoML ----------
+    with sub_auto:
+        st.markdown("**Handgebaut + Optuna vs. AutoML (PyCaret).** Auch die automatische Pipeline "
+                    "landet bei Boosting (Sieger LightGBM).")
+        show_img("14_pycaret_leaderboard.png", "PyCaret AutoML-Leaderboard (AUC, 5-fach-CV)")
+        st.info("Die wichtigste Lektion liefert der Dummy-Classifier: 96,6 % Accuracy bei AUC 0,5 "
+                "und Recall 0 % — der Beweis, warum dieses Projekt auf Recall/PR-AUC statt Accuracy "
+                "optimiert.", icon="💡")
